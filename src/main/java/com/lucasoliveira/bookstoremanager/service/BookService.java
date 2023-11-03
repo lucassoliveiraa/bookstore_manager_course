@@ -4,6 +4,7 @@ package com.lucasoliveira.bookstoremanager.service;
 import com.lucasoliveira.bookstoremanager.dto.BookDTO;
 import com.lucasoliveira.bookstoremanager.dto.MessageResponseDTO;
 import com.lucasoliveira.bookstoremanager.entity.Book;
+import com.lucasoliveira.bookstoremanager.mapper.IBookMapper;
 import com.lucasoliveira.bookstoremanager.repository.IBookRepository;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -19,17 +20,9 @@ public class BookService {
     @Autowired
     private IBookRepository repository;
 
+    private final IBookMapper bookMapper = IBookMapper.INSTANCE;
     public MessageResponseDTO create(BookDTO bookDTO) {
-        System.out.println("Aqui");
-        Book bookToSave = Book.builder()
-                .name(bookDTO.name())
-                .pages(bookDTO.pages())
-                .chapters(bookDTO.chapters())
-                .isbn(bookDTO.isbn())
-                .publisherName(bookDTO.publisherName())
-                .author(bookDTO.author())
-                .build();
-
+        Book bookToSave = bookMapper.toModel(bookDTO);
         Book savedBook = repository.save(bookToSave);
         return MessageResponseDTO.builder()
                 .message("Book created with ID: " + savedBook.getId())
