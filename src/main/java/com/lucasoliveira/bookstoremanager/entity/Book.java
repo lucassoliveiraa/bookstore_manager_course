@@ -1,5 +1,6 @@
 package com.lucasoliveira.bookstoremanager.entity;
 
+import com.lucasoliveira.bookstoremanager.dto.BookDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,7 +22,7 @@ public class Book {
     private String name;
 
     @Column(nullable = false)
-    private String pages;
+    private Integer pages;
 
     @Column(nullable = false)
     private Integer chapters;
@@ -35,4 +36,6 @@ public class Book {
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @JoinColumn(name = "author_id")
     private Author author;
+
+
 }
