@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.Optional;
+
 
 @Service
 @AllArgsConstructor
@@ -27,5 +29,10 @@ public class BookService {
         return MessageResponseDTO.builder()
                 .message("Book created with ID: " + savedBook.getId())
                 .build();
+    }
+
+    public BookDTO findById(Long id) {
+        Optional<Book> optionalBook = repository.findById(id);
+        return bookMapper.toDTO(optionalBook.get());
     }
 }
